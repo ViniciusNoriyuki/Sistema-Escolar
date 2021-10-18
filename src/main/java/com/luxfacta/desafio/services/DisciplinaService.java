@@ -19,4 +19,10 @@ public class DisciplinaService {
 
         return disciplina.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Disciplina.class.getName()));
     }
+
+    public Disciplina insert(Disciplina disciplina) {
+        disciplina.setId(null);
+
+        return disciplinaRepository.save(disciplina);
+    }
 }
