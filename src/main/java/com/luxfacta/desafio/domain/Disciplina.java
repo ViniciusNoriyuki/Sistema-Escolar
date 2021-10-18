@@ -1,18 +1,14 @@
 package com.luxfacta.desafio.domain;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Disciplina implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -21,4 +17,15 @@ public class Disciplina implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "disciplinas")
+    private List<Aluno> alunos = new ArrayList<>();
+
+    public Disciplina() {}
+
+    public Disciplina(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 }
