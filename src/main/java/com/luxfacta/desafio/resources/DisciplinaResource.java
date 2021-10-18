@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +37,8 @@ public class DisciplinaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody Disciplina disciplina) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody DisciplinaDTO disciplinaDTO) {
+        Disciplina disciplina = disciplinaService.fromDTO(disciplinaDTO);
         disciplina = disciplinaService.insert(disciplina);
 
         URI uri = ServletUriComponentsBuilder
@@ -49,7 +51,8 @@ public class DisciplinaResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Disciplina disciplina) {
+    public ResponseEntity<Void> update(@Valid @RequestBody DisciplinaDTO disciplinaDTO, @PathVariable Integer id) {
+        Disciplina disciplina = disciplinaService.fromDTO(disciplinaDTO);
         disciplina.setId(id);
         disciplina = disciplinaService.update(disciplina);
 

@@ -1,6 +1,7 @@
 package com.luxfacta.desafio.services;
 
 import com.luxfacta.desafio.domain.Disciplina;
+import com.luxfacta.desafio.dto.DisciplinaDTO;
 import com.luxfacta.desafio.repositories.DisciplinaRepository;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
@@ -55,5 +56,9 @@ public class DisciplinaService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
         return disciplinaRepository.findAll(pageRequest);
+    }
+
+    public Disciplina fromDTO(DisciplinaDTO disciplinaDTO) {
+        return new Disciplina(disciplinaDTO.getId(), disciplinaDTO.getNome());
     }
 }
