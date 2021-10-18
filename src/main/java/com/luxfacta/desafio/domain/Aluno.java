@@ -1,14 +1,18 @@
 package com.luxfacta.desafio.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
-public class Aluno {
+public class Aluno implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +26,6 @@ public class Aluno {
         inverseJoinColumns = @JoinColumn(name = "disciplina_id")
     )
     private List<Disciplina> disciplinas = new ArrayList<>();
-
-    public Aluno() {}
 
     public Aluno(Integer id, String nome, String email) {
         this.id = id;
