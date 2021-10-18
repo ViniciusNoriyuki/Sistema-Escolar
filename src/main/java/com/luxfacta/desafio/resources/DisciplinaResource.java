@@ -35,4 +35,12 @@ public class DisciplinaResource {
 
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Disciplina disciplina) {
+        disciplina.setId(id);
+        disciplina = disciplinaService.update(disciplina);
+
+        return ResponseEntity.noContent().build();
+    }
 }

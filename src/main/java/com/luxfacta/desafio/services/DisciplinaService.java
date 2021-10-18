@@ -25,4 +25,10 @@ public class DisciplinaService {
 
         return disciplinaRepository.save(disciplina);
     }
+
+    public Disciplina update(Disciplina disciplina) {
+        find(disciplina.getId());
+
+        return disciplinaRepository.save(disciplina);
+    }
 }
