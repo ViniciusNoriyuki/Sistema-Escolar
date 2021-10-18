@@ -1,5 +1,6 @@
 package com.luxfacta.desafio.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,10 @@ public class Aluno implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "disciplina_id")
     )
     private List<Disciplina> disciplinas = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "aluno")
+    private List<Nota> notas = new ArrayList<>();
 
     public Aluno(Integer id, String nome, String email) {
         this.id = id;

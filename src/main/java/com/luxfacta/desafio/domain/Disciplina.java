@@ -28,6 +28,10 @@ public class Disciplina implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private Professor professor;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "disciplina")
+    private List<Nota> notas = new ArrayList<>();
+
     public Disciplina(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
