@@ -1,6 +1,7 @@
 package com.luxfacta.desafio.resources;
 
 import com.luxfacta.desafio.domain.Disciplina;
+import com.luxfacta.desafio.dto.DisciplinaDTO;
 import com.luxfacta.desafio.services.DisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/disciplinas")
@@ -21,6 +24,14 @@ public class DisciplinaResource {
         Disciplina disciplina = disciplinaService.find(id);
 
         return ResponseEntity.ok().body(disciplina);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DisciplinaDTO>> findAll() {
+        List<Disciplina> list = disciplinaService.findAll();
+        List<DisciplinaDTO> listDTO = list.stream().map(obj -> new DisciplinaDTO(obj)).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(listDTO);
     }
 
     @PostMapping
