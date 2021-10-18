@@ -2,8 +2,10 @@ package com.luxfacta.desafio.services;
 
 import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.repositories.DisciplinaRepository;
+import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,5 +32,14 @@ public class DisciplinaService {
         find(disciplina.getId());
 
         return disciplinaRepository.save(disciplina);
+    }
+
+    public void delete(Integer id) {
+        find(id);
+        try {
+            disciplinaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("Não é possível excluir uma disciplina que possui alunos, disciplinas e/ou notas.");
+        }
     }
 }
