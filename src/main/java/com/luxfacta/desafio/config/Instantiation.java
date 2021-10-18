@@ -34,6 +34,11 @@ public class Instantiation implements CommandLineRunner {
 
         Disciplina d1 = new Disciplina(null, "Matemática");
         Disciplina d2 = new Disciplina(null, "Geografia");
+        Disciplina d3 = new Disciplina(null, "História");
+        Disciplina d4 = new Disciplina(null, "Química");
+        Disciplina d5 = new Disciplina(null, "Física");
+        Disciplina d6 = new Disciplina(null, "Espanhol");
+        Disciplina d7 = new Disciplina(null, "Ética e Cidadania");
 
         p1.setDisciplina(d1);
         p2.setDisciplina(d2);
@@ -78,7 +83,7 @@ public class Instantiation implements CommandLineRunner {
         d2.getNotas().addAll(Arrays.asList(n3, n4));
         d1.getNotas().addAll(Arrays.asList(n5, n6));
 
-        disciplinaRepository.saveAll(Arrays.asList(d1, d2));
+        disciplinaRepository.saveAll(Arrays.asList(d1, d2, d3, d4, d5, d6, d7));
         alunoRepository.saveAll(Arrays.asList(a1, a2));
         professorRepository.saveAll(Arrays.asList(p1, p2));
         notaRepository.saveAll(Arrays.asList(n1, n2, n3, n4, n5, n6));

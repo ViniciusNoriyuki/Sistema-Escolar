@@ -4,6 +4,7 @@ import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.dto.DisciplinaDTO;
 import com.luxfacta.desafio.services.DisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -63,4 +64,16 @@ public class DisciplinaResource {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping(value = "/page")
+    public ResponseEntity<Page<DisciplinaDTO>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
+        Page<Disciplina> list = disciplinaService.findPage(page, linesPerPage, orderBy, direction);
+        Page<DisciplinaDTO> listDTO = list.map(obj -> new DisciplinaDTO(obj));
+
+        return ResponseEntity.ok().body(listDTO);
+    }
 }
