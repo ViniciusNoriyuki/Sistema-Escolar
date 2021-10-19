@@ -34,9 +34,14 @@ public class DisciplinaService {
     }
 
     public Disciplina update(Disciplina disciplina) {
-        find(disciplina.getId());
+        Disciplina newdisciplina = find(disciplina.getId());
+        updateData(newdisciplina, disciplina);
 
-        return disciplinaRepository.save(disciplina);
+        return disciplinaRepository.save(newdisciplina);
+    }
+
+    private void updateData(Disciplina newdisciplina, Disciplina disciplina) {
+        newdisciplina.setNome(disciplina.getNome());
     }
 
     public void delete(Integer id) {
