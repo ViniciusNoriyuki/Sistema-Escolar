@@ -21,6 +21,7 @@ public class Aluno implements Serializable {
     private String nome;
     private String email;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "ALUNO_DISCIPLINA",
         joinColumns = @JoinColumn(name = "aluno_id"),
