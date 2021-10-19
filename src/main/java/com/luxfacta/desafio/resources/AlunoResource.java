@@ -7,6 +7,7 @@ import com.luxfacta.desafio.dto.AlunoDTO;
 import com.luxfacta.desafio.dto.ProfessorDTO;
 import com.luxfacta.desafio.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -78,6 +79,19 @@ public class AlunoResource {
     public ResponseEntity<List<AlunoDTO>> findAll() {
         List<Aluno> list = alunoService.findAll();
         List<AlunoDTO> listDTO = list.stream().map(obj -> new AlunoDTO(obj)).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(listDTO);
+    }
+
+    @GetMapping(value = "/page")
+    public ResponseEntity<Page<AlunoDTO>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
+        Page<Aluno> list = alunoService.findPage(page, linesPerPage, orderBy, direction);
+        Page<AlunoDTO> listDTO = list.map(obj -> new AlunoDTO(obj));
 
         return ResponseEntity.ok().body(listDTO);
     }

@@ -2,12 +2,16 @@ package com.luxfacta.desafio.services;
 
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Disciplina;
+import com.luxfacta.desafio.domain.Professor;
 import com.luxfacta.desafio.dto.AlunoDTO;
 import com.luxfacta.desafio.repositories.AlunoRepository;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,6 +60,12 @@ public class AlunoService {
 
     public List<Aluno> findAll() {
         return alunoRepository.findAll();
+    }
+
+    public Page<Aluno> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+
+        return alunoRepository.findAll(pageRequest);
     }
 
     public Aluno fromDTO(AlunoDTO alunoDTO) {
