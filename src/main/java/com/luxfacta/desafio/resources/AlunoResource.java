@@ -3,6 +3,7 @@ package com.luxfacta.desafio.resources;
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Professor;
+import com.luxfacta.desafio.dto.AlunoCompleteDTO;
 import com.luxfacta.desafio.dto.AlunoDTO;
 import com.luxfacta.desafio.dto.ProfessorDTO;
 import com.luxfacta.desafio.services.AlunoService;
@@ -94,5 +95,13 @@ public class AlunoResource {
         Page<AlunoDTO> listDTO = list.map(obj -> new AlunoDTO(obj));
 
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @GetMapping(value = "/{id}/complete")
+    public ResponseEntity<AlunoCompleteDTO> search(@PathVariable Integer id) {
+        Aluno aluno = alunoService.find(id);
+        AlunoCompleteDTO alunoCompleteDTO = alunoService.search(aluno);
+
+        return ResponseEntity.ok().body(alunoCompleteDTO);
     }
 }

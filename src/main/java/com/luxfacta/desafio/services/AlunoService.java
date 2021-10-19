@@ -2,8 +2,11 @@ package com.luxfacta.desafio.services;
 
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Disciplina;
+import com.luxfacta.desafio.domain.Nota;
 import com.luxfacta.desafio.domain.Professor;
+import com.luxfacta.desafio.dto.AlunoCompleteDTO;
 import com.luxfacta.desafio.dto.AlunoDTO;
+import com.luxfacta.desafio.dto.NotaViewDTO;
 import com.luxfacta.desafio.repositories.AlunoRepository;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
@@ -77,5 +80,15 @@ public class AlunoService {
         aluno.getDisciplinas().add(disciplina);
 
         return update(aluno);
+    }
+
+    public AlunoCompleteDTO search(Aluno aluno) {
+        AlunoCompleteDTO alunoCompleteDTO = new AlunoCompleteDTO(aluno);
+
+        for (Nota nota : aluno.getNotas()) {
+            alunoCompleteDTO.getNotas().add(new NotaViewDTO(nota));
+        }
+
+        return alunoCompleteDTO;
     }
 }
