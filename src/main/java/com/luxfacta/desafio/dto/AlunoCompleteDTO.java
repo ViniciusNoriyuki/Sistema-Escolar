@@ -1,6 +1,7 @@
 package com.luxfacta.desafio.dto;
 
 import com.luxfacta.desafio.domain.Aluno;
+import com.luxfacta.desafio.domain.Disciplina;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ public class AlunoCompleteDTO implements Serializable {
     private String nome;
     private String email;
     private List<NotaViewDTO> notas = new ArrayList<>();
+    private List<Disciplina> disciplinas = new ArrayList<>();
 
     public AlunoCompleteDTO(Aluno aluno) {
         id = aluno.getId();

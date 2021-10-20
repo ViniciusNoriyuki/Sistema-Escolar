@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,6 +88,10 @@ public class AlunoService {
 
         for (Nota nota : aluno.getNotas()) {
             alunoCompleteDTO.getNotas().add(new NotaViewDTO(nota));
+        }
+
+        for (Disciplina disciplina : aluno.getDisciplinas()) {
+            alunoCompleteDTO.getDisciplinas().add(disciplina);
         }
 
         return alunoCompleteDTO;
