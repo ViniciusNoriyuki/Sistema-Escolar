@@ -2,6 +2,7 @@ package com.luxfacta.desafio.resources;
 
 import com.luxfacta.desafio.domain.Professor;
 import com.luxfacta.desafio.dto.ProfessorDTO;
+import com.luxfacta.desafio.dto.ProfessorNewDTO;
 import com.luxfacta.desafio.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,8 +30,8 @@ public class ProfessorResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody ProfessorDTO professorDTO) {
-        Professor professor = professorService.fromDTO(professorDTO);
+    public ResponseEntity<Void> insert(@Valid @RequestBody ProfessorNewDTO professorNewDTO) {
+        Professor professor = professorService.fromDTO(professorNewDTO);
         professor = professorService.insert(professor);
 
         URI uri = ServletUriComponentsBuilder

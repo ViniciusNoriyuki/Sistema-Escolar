@@ -5,6 +5,7 @@ import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.domain.Nota;
 import com.luxfacta.desafio.dto.AlunoCompleteDTO;
 import com.luxfacta.desafio.dto.AlunoDTO;
+import com.luxfacta.desafio.dto.AlunoNewDTO;
 import com.luxfacta.desafio.dto.NotaViewDTO;
 import com.luxfacta.desafio.repositories.AlunoRepository;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
@@ -14,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class AlunoService {
     private AlunoRepository alunoRepository;
     @Autowired
     private DisciplinaService disciplinaService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Aluno find(Integer id) {
         Optional<Aluno> aluno = alunoRepository.findById(id);
@@ -71,7 +75,11 @@ public class AlunoService {
     }
 
     public Aluno fromDTO(AlunoDTO alunoDTO) {
-        return new Aluno(alunoDTO.getId(), alunoDTO.getNome(), alunoDTO.getEmail());
+        return new Aluno(alunoDTO.getId(), alunoDTO.getNome(), alunoDTO.getEmail(), null);
+    }
+
+    public Aluno fromDTO(AlunoNewDTO alunoNewDTO) {
+        return new Aluno(alunoNewDTO.getId(), alunoNewDTO.getNome(), alunoNewDTO.getEmail(), bCryptPasswordEncoder.encode(alunoNewDTO.getSenha()));
     }
 
     public Aluno insertDisciplina(Integer alunoId, Integer disciplinaId) {

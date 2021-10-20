@@ -20,13 +20,17 @@ public class Professor implements Serializable {
     private String nome;
     private String email;
 
+    @JsonIgnore
+    private String senha;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "disciplina_id")
     private Disciplina disciplina;
 
-    public Professor(Integer id, String nome, String email) {
+    public Professor(Integer id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.senha = senha;
     }
 }

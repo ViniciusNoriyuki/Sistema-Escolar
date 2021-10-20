@@ -9,6 +9,7 @@ import com.luxfacta.desafio.repositories.DisciplinaRepository;
 import com.luxfacta.desafio.repositories.NotaRepository;
 import com.luxfacta.desafio.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -24,11 +25,13 @@ public class DBService {
     private ProfessorRepository professorRepository;
     @Autowired
     private NotaRepository notaRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void instantiateTestDataBase() {
 
-        Professor p1 = new Professor(null, "Prof João", "profjoao@gmail.com");
-        Professor p2 = new Professor(null, "Prof Paula", "profpaula@gmail.com");
+        Professor p1 = new Professor(null, "Prof João", "profjoao@gmail.com", bCryptPasswordEncoder.encode("123"));
+        Professor p2 = new Professor(null, "Prof Paula", "profpaula@gmail.com", bCryptPasswordEncoder.encode("456"));
 
         Disciplina d1 = new Disciplina(null, "Matemática");
         Disciplina d2 = new Disciplina(null, "Geografia");
@@ -44,8 +47,8 @@ public class DBService {
         d1.setProfessor(p1);
         d2.setProfessor(p2);
 
-        Aluno a1 = new Aluno(null, "Vinicius", "vinicius123@gmail.com");
-        Aluno a2 = new Aluno(null, "Pedro", "pedro123@gmail.com");
+        Aluno a1 = new Aluno(null, "Vinicius", "vinicius123@gmail.com", bCryptPasswordEncoder.encode("123"));
+        Aluno a2 = new Aluno(null, "Pedro", "pedro123@gmail.com", bCryptPasswordEncoder.encode("456"));
 
         d1.getAlunos().addAll(Arrays.asList(a1, a2));
         d2.getAlunos().add((a1));

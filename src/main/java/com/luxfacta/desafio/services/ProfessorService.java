@@ -3,6 +3,7 @@ package com.luxfacta.desafio.services;
 import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.domain.Professor;
 import com.luxfacta.desafio.dto.ProfessorDTO;
+import com.luxfacta.desafio.dto.ProfessorNewDTO;
 import com.luxfacta.desafio.repositories.ProfessorRepository;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class ProfessorService {
     private ProfessorRepository professorRepository;
     @Autowired
     private DisciplinaService disciplinaService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Professor find(Integer id) {
         Optional<Professor> professor = professorRepository.findById(id);
@@ -68,7 +72,11 @@ public class ProfessorService {
     }
 
     public Professor fromDTO(ProfessorDTO professorDTO) {
-        return new Professor(professorDTO.getId(), professorDTO.getNome(), professorDTO.getEmail());
+        return new Professor(professorDTO.getId(), professorDTO.getNome(), professorDTO.getEmail(), null);
+    }
+
+    public Professor fromDTO(ProfessorNewDTO professorNewDTO) {
+        return new Professor(professorNewDTO.getId(), professorNewDTO.getNome(), professorNewDTO.getEmail(), bCryptPasswordEncoder.encode(professorNewDTO.getSenha()));
     }
 
     public Professor insertDisciplina(Integer professorId, Integer disciplinaId) {

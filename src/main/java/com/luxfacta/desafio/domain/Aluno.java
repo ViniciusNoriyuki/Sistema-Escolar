@@ -22,6 +22,9 @@ public class Aluno implements Serializable {
     private String email;
 
     @JsonIgnore
+    private String senha;
+
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "ALUNO_DISCIPLINA",
         joinColumns = @JoinColumn(name = "aluno_id"),
@@ -33,9 +36,10 @@ public class Aluno implements Serializable {
     @OneToMany(mappedBy = "aluno")
     private List<Nota> notas = new ArrayList<>();
 
-    public Aluno(Integer id, String nome, String email) {
+    public Aluno(Integer id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.senha = senha;
     }
 }
