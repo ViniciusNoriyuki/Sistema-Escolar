@@ -48,8 +48,7 @@ public class AlunoResource {
 
     @PostMapping(value = "/{alunoId}/disciplina/{disciplinaId}")
     public ResponseEntity<Void> insertDisciplinaInAluno(@PathVariable Integer alunoId, @PathVariable Integer disciplinaId) {
-        Aluno aluno = alunoService.find(alunoId);
-        aluno = alunoService.insertDisciplina(aluno, disciplinaId);
+        Aluno aluno = alunoService.insertDisciplina(alunoId, disciplinaId);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

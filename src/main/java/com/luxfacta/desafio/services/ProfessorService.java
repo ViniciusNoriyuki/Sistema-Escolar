@@ -71,7 +71,8 @@ public class ProfessorService {
         return new Professor(professorDTO.getId(), professorDTO.getNome(), professorDTO.getEmail());
     }
 
-    public Professor insertDisciplina(Professor professor, Integer disciplinaId) {
+    public Professor insertDisciplina(Integer professorId, Integer disciplinaId) {
+        Professor professor = find(professorId);
         Disciplina disciplina = disciplinaService.find(disciplinaId);
         professor.setDisciplina(disciplina);
 

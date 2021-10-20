@@ -76,7 +76,8 @@ public class AlunoService {
         return new Aluno(alunoDTO.getId(), alunoDTO.getNome(), alunoDTO.getEmail());
     }
 
-    public Aluno insertDisciplina(Aluno aluno, Integer disciplinaId) {
+    public Aluno insertDisciplina(Integer alunoId, Integer disciplinaId) {
+        Aluno aluno = find(alunoId);
         Disciplina disciplina = disciplinaService.find(disciplinaId);
         aluno.getDisciplinas().add(disciplina);
 

@@ -44,8 +44,7 @@ public class ProfessorResource {
 
     @PostMapping(value = "/{professorId}/disciplina/{disciplinaId}")
     public ResponseEntity<Void> insertDisciplinaInProfessor(@PathVariable Integer professorId, @PathVariable Integer disciplinaId) {
-        Professor professor = professorService.find(professorId);
-        professor = professorService.insertDisciplina(professor, disciplinaId);
+        Professor professor = professorService.insertDisciplina(professorId, disciplinaId);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
