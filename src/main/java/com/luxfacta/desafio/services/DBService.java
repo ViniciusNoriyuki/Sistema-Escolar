@@ -1,4 +1,4 @@
-package com.luxfacta.desafio.config;
+package com.luxfacta.desafio.services;
 
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Disciplina;
@@ -9,13 +9,12 @@ import com.luxfacta.desafio.repositories.DisciplinaRepository;
 import com.luxfacta.desafio.repositories.NotaRepository;
 import com.luxfacta.desafio.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
-@Configuration
-public class Instantiation implements CommandLineRunner {
+@Service
+public class DBService {
 
     @Autowired
     private DisciplinaRepository disciplinaRepository;
@@ -26,8 +25,7 @@ public class Instantiation implements CommandLineRunner {
     @Autowired
     private NotaRepository notaRepository;
 
-    @Override
-    public void run(String... args) throws Exception {
+    public void instantiateTestDataBase() {
 
         Professor p1 = new Professor(null, "Prof João", "profjoao@gmail.com");
         Professor p2 = new Professor(null, "Prof Paula", "profpaula@gmail.com");
