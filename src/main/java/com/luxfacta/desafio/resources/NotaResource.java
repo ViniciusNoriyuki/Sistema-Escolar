@@ -1,11 +1,10 @@
 package com.luxfacta.desafio.resources;
 
 import com.luxfacta.desafio.domain.Nota;
-import com.luxfacta.desafio.domain.Nota;
 import com.luxfacta.desafio.dto.NotaDTO;
+import com.luxfacta.desafio.dto.NotaNewDTO;
 import com.luxfacta.desafio.services.NotaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,6 +26,20 @@ public class NotaResource {
         Nota nota = notaService.find(id);
 
         return ResponseEntity.ok().body(nota);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@Valid @RequestBody NotaNewDTO notaNewDTO) {
+        Nota nota = notaService.fromDTO(notaNewDTO);
+        nota = notaService.insert(nota);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(nota.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")

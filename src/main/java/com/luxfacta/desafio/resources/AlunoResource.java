@@ -1,11 +1,8 @@
 package com.luxfacta.desafio.resources;
 
 import com.luxfacta.desafio.domain.Aluno;
-import com.luxfacta.desafio.domain.Aluno;
-import com.luxfacta.desafio.domain.Professor;
 import com.luxfacta.desafio.dto.AlunoCompleteDTO;
 import com.luxfacta.desafio.dto.AlunoDTO;
-import com.luxfacta.desafio.dto.ProfessorDTO;
 import com.luxfacta.desafio.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

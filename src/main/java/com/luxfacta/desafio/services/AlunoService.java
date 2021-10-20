@@ -3,7 +3,6 @@ package com.luxfacta.desafio.services;
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.domain.Nota;
-import com.luxfacta.desafio.domain.Professor;
 import com.luxfacta.desafio.dto.AlunoCompleteDTO;
 import com.luxfacta.desafio.dto.AlunoDTO;
 import com.luxfacta.desafio.dto.NotaViewDTO;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
