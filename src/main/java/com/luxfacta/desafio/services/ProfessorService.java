@@ -27,6 +27,8 @@ public class ProfessorService {
     private DisciplinaService disciplinaService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private EmailService emailService;
 
     public Professor find(Integer id) {
         Optional<Professor> professor = professorRepository.findById(id);
@@ -37,7 +39,10 @@ public class ProfessorService {
     public Professor insert(Professor professor) {
         professor.setId(null);
 
-        return professorRepository.save(professor);
+        professor =  professorRepository.save(professor);
+        emailService.sendProfessorConfirmationEmail(professor);
+
+        return professor;
     }
     
     public Professor update(Professor professor) {

@@ -33,6 +33,8 @@ public class AlunoService {
     private DisciplinaService disciplinaService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private EmailService emailService;
 
     public Aluno find(Integer id) {
         UserSS user = UserService.authenticated();
@@ -48,7 +50,10 @@ public class AlunoService {
     public Aluno insert(Aluno aluno) {
         aluno.setId(null);
 
-        return alunoRepository.save(aluno);
+        aluno = alunoRepository.save(aluno);
+        emailService.sendAlunoConfirmationEmail(aluno);
+
+        return aluno;
     }
 
     public Aluno update(Aluno aluno) {

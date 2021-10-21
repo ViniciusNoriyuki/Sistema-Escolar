@@ -62,4 +62,16 @@ public class Aluno implements Serializable {
     public void addPerfil(Perfil perfil) {
         perfis.add(perfil.getCod());
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nDetalhes do Usuário - Aluno:\n");
+        builder.append("Nome: ");
+        builder.append(getNome());
+        builder.append("\n");
+        builder.append("Email: ");
+        builder.append(getEmail());
+        return builder.toString();
+    }
 }
