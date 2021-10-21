@@ -1,6 +1,7 @@
 package com.luxfacta.desafio.dto;
 
 import com.luxfacta.desafio.domain.Professor;
+import com.luxfacta.desafio.services.validation.ProfessorInsert;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@ProfessorInsert
 public class ProfessorNewDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
