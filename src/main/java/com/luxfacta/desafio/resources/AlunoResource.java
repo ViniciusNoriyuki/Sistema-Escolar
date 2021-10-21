@@ -8,6 +8,7 @@ import com.luxfacta.desafio.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,6 +31,7 @@ public class AlunoResource {
         return ResponseEntity.ok().body(aluno);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody AlunoNewDTO alunoNewDTO) {
         Aluno aluno = alunoService.fromDTO(alunoNewDTO);
@@ -44,6 +46,7 @@ public class AlunoResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(value = "/{alunoId}/disciplina/{disciplinaId}")
     public ResponseEntity<Void> insertDisciplinaInAluno(@PathVariable Integer alunoId, @PathVariable Integer disciplinaId) {
         Aluno aluno = alunoService.insertDisciplina(alunoId, disciplinaId);
@@ -56,7 +59,8 @@ public class AlunoResource {
 
         return ResponseEntity.created(uri).build();
     }
-    
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody AlunoDTO alunoDTO, @PathVariable Integer id) {
         Aluno aluno = alunoService.fromDTO(alunoDTO);
@@ -66,6 +70,7 @@ public class AlunoResource {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         alunoService.delete(id);
@@ -73,6 +78,7 @@ public class AlunoResource {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<AlunoDTO>> findAll() {
         List<Aluno> list = alunoService.findAll();
@@ -81,6 +87,7 @@ public class AlunoResource {
         return ResponseEntity.ok().body(listDTO);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/page")
     public ResponseEntity<Page<AlunoDTO>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,

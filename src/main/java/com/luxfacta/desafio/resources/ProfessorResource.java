@@ -7,6 +7,7 @@ import com.luxfacta.desafio.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,6 +30,7 @@ public class ProfessorResource {
         return ResponseEntity.ok().body(professor);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ProfessorNewDTO professorNewDTO) {
         Professor professor = professorService.fromDTO(professorNewDTO);
@@ -43,6 +45,7 @@ public class ProfessorResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(value = "/{professorId}/disciplina/{disciplinaId}")
     public ResponseEntity<Void> insertDisciplinaInProfessor(@PathVariable Integer professorId, @PathVariable Integer disciplinaId) {
         Professor professor = professorService.insertDisciplina(professorId, disciplinaId);
@@ -56,6 +59,7 @@ public class ProfessorResource {
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody ProfessorDTO professorDTO, @PathVariable Integer id) {
         Professor professor = professorService.fromDTO(professorDTO);
@@ -64,7 +68,8 @@ public class ProfessorResource {
 
         return ResponseEntity.noContent().build();
     }
-    
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         professorService.delete(id);
