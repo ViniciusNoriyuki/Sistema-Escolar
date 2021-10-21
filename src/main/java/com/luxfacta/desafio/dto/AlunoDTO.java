@@ -1,7 +1,7 @@
 package com.luxfacta.desafio.dto;
 
 import com.luxfacta.desafio.domain.Aluno;
-import com.luxfacta.desafio.domain.Professor;
+import com.luxfacta.desafio.services.validation.AlunoUpdate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -12,6 +12,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@AlunoUpdate
 public class AlunoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
