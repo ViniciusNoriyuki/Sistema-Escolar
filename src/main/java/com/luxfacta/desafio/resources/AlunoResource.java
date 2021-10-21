@@ -103,8 +103,7 @@ public class AlunoResource {
 
     @GetMapping(value = "/{id}/complete")
     public ResponseEntity<AlunoCompleteDTO> search(@PathVariable Integer id) {
-        Aluno aluno = alunoService.find(id);
-        AlunoCompleteDTO alunoCompleteDTO = alunoService.search(aluno);
+        AlunoCompleteDTO alunoCompleteDTO = alunoService.search(id);
 
         return ResponseEntity.ok().body(alunoCompleteDTO);
     }

@@ -3,11 +3,14 @@ package com.luxfacta.desafio.services;
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.domain.Nota;
+import com.luxfacta.desafio.domain.enums.Perfil;
 import com.luxfacta.desafio.dto.AlunoCompleteDTO;
 import com.luxfacta.desafio.dto.AlunoDTO;
 import com.luxfacta.desafio.dto.AlunoNewDTO;
 import com.luxfacta.desafio.dto.NotaViewDTO;
 import com.luxfacta.desafio.repositories.AlunoRepository;
+import com.luxfacta.desafio.security.UserSS;
+import com.luxfacta.desafio.services.exceptions.AuthorizationException;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,11 @@ public class AlunoService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Aluno find(Integer id) {
+        UserSS user = UserSevice.authenticated();
+
+        if (user == null || !user.hasHole(Perfil.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
         Optional<Aluno> aluno = alunoRepository.findById(id);
 
         return aluno.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Aluno.class.getName()));
@@ -90,7 +98,8 @@ public class AlunoService {
         return update(aluno);
     }
 
-    public AlunoCompleteDTO search(Aluno aluno) {
+    public AlunoCompleteDTO search(Integer id) {
+        Aluno aluno = find(id);
         AlunoCompleteDTO alunoCompleteDTO = new AlunoCompleteDTO(aluno);
 
         for (Nota nota : aluno.getNotas()) {

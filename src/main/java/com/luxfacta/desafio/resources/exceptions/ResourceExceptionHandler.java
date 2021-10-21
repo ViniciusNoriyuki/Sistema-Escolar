@@ -1,5 +1,6 @@
 package com.luxfacta.desafio.resources.exceptions;
 
+import com.luxfacta.desafio.services.exceptions.AuthorizationException;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,16 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<StandardError> dataIntegrity(AccessDeniedException e, HttpServletRequest request) {
+    public ResponseEntity<StandardError> accessDenied(AccessDeniedException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+
+        StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Acesso negado", e.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.FORBIDDEN;
 
         StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Acesso negado", e.getMessage(), request.getRequestURI());
