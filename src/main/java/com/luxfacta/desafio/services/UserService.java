@@ -3,7 +3,7 @@ package com.luxfacta.desafio.services;
 import com.luxfacta.desafio.security.UserSS;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public class UserSevice {
+public class UserService {
 
     public static UserSS authenticated() {
         try {
