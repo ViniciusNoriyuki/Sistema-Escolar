@@ -81,6 +81,21 @@ public class AlunoService {
         return alunoRepository.findAll();
     }
 
+    public Aluno findByEmail(String email) {
+        UserSS user = UserService.authenticated();
+
+        if (user == null || !user.hasHole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Aluno obj = alunoRepository.findByEmail(email);
+        if (obj == null) {
+            throw new ObjectNotFoundException("Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Aluno.class.getName());
+        }
+
+        return obj;
+    }
+
     public Page<Aluno> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 

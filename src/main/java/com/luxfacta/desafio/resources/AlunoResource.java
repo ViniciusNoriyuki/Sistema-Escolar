@@ -87,6 +87,13 @@ public class AlunoResource {
         return ResponseEntity.ok().body(listDTO);
     }
 
+    @GetMapping(value = "/email")
+    public ResponseEntity<Aluno> find(@RequestParam(value = "value") String email) {
+        Aluno aluno = alunoService.findByEmail(email);
+
+        return ResponseEntity.ok().body(aluno);
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/page")
     public ResponseEntity<Page<AlunoDTO>> findPage(

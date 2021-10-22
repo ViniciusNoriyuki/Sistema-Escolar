@@ -84,6 +84,13 @@ public class ProfessorResource {
 
         return ResponseEntity.ok().body(listDTO);
     }
+
+    @GetMapping(value = "/email")
+    public ResponseEntity<Professor> find(@RequestParam(value = "value") String email) {
+        Professor professor = professorService.findByEmail(email);
+
+        return ResponseEntity.ok().body(professor);
+    }
     
     @GetMapping(value = "/page")
     public ResponseEntity<Page<ProfessorDTO>> findPage(

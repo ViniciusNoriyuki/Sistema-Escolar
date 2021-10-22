@@ -2,9 +2,12 @@ package com.luxfacta.desafio.services;
 
 import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.domain.Professor;
+import com.luxfacta.desafio.domain.enums.Perfil;
 import com.luxfacta.desafio.dto.ProfessorDTO;
 import com.luxfacta.desafio.dto.ProfessorNewDTO;
 import com.luxfacta.desafio.repositories.ProfessorRepository;
+import com.luxfacta.desafio.security.UserSS;
+import com.luxfacta.desafio.services.exceptions.AuthorizationException;
 import com.luxfacta.desafio.services.exceptions.DataIntegrityException;
 import com.luxfacta.desafio.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +77,21 @@ public class ProfessorService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
         return professorRepository.findAll(pageRequest);
+    }
+
+    public Professor findByEmail(String email) {
+        UserSS user = UserService.authenticated();
+
+        if (user == null || !user.hasHole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Professor obj = professorRepository.findByEmail(email);
+        if (obj == null) {
+            throw new ObjectNotFoundException("Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Professor.class.getName());
+        }
+
+        return obj;
     }
 
     public Professor fromDTO(ProfessorDTO professorDTO) {
