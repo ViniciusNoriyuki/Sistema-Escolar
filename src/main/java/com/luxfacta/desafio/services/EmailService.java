@@ -11,4 +11,8 @@ public interface EmailService {
     void sendAlunoConfirmationEmail(Aluno obj);
 
     void sendEmail(SimpleMailMessage msg);
+
+    void sendProfessorNewPasswordEmail(Professor professor, String newPass);
+
+    void sendAlunoNewPasswordEmail(Aluno aluno, String newPass);
 }

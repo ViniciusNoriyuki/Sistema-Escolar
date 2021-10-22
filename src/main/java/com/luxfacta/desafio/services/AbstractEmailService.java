@@ -45,4 +45,38 @@ public abstract class AbstractEmailService implements EmailService {
 
         return sm;
     }
+
+    @Override
+    public void sendProfessorNewPasswordEmail(Professor professor, String newPass) {
+        SimpleMailMessage sm = prepareNewPasswordEmailFromProfessor(professor, newPass);
+        sendEmail(sm);
+    }
+
+    protected SimpleMailMessage prepareNewPasswordEmailFromProfessor(Professor professor, String newPass) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(professor.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Solicitação de nova senha!");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("Nova senha: " + newPass);
+
+        return sm;
+    }
+
+    @Override
+    public void sendAlunoNewPasswordEmail(Aluno aluno, String newPass) {
+        SimpleMailMessage sm = prepareNewPasswordEmailFromAluno(aluno, newPass);
+        sendEmail(sm);
+    }
+
+    protected SimpleMailMessage prepareNewPasswordEmailFromAluno(Aluno aluno, String newPass) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(aluno.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Solicitação de nova senha!");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("Nova senha: " + newPass);
+
+        return sm;
+    }
 }
