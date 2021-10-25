@@ -117,8 +117,7 @@ public class AlunoResource {
 
     @GetMapping(value = "/email/complete")
     public ResponseEntity<AlunoCompleteDTO> searchByEmail(@RequestParam(value = "value") String email) {
-        Aluno aluno = alunoService.findByEmail(email);
-        AlunoCompleteDTO alunoCompleteDTO = alunoService.search(aluno.getId());
+        AlunoCompleteDTO alunoCompleteDTO = alunoService.searchByEmail(email);
 
         return ResponseEntity.ok().body(alunoCompleteDTO);
     }

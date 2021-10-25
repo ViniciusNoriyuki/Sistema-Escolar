@@ -132,4 +132,10 @@ public class AlunoService {
 
         return alunoCompleteDTO;
     }
+
+    public AlunoCompleteDTO searchByEmail(String email) {
+        Aluno aluno = findByEmail(email);
+
+        return search(aluno.getId());
+    }
 }
