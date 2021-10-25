@@ -114,4 +114,12 @@ public class AlunoResource {
 
         return ResponseEntity.ok().body(alunoCompleteDTO);
     }
+
+    @GetMapping(value = "/email/complete")
+    public ResponseEntity<AlunoCompleteDTO> searchByEmail(@RequestParam(value = "value") String email) {
+        Aluno aluno = alunoService.findByEmail(email);
+        AlunoCompleteDTO alunoCompleteDTO = alunoService.search(aluno.getId());
+
+        return ResponseEntity.ok().body(alunoCompleteDTO);
+    }
 }
