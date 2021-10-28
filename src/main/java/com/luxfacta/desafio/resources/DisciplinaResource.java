@@ -1,7 +1,10 @@
 package com.luxfacta.desafio.resources;
 
+import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Disciplina;
+import com.luxfacta.desafio.dto.AlunoDTO;
 import com.luxfacta.desafio.dto.DisciplinaDTO;
+import com.luxfacta.desafio.services.AlunoService;
 import com.luxfacta.desafio.services.DisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,8 @@ public class DisciplinaResource {
 
     @Autowired
     private DisciplinaService disciplinaService;
+    @Autowired
+    private AlunoService alunoService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Disciplina> find(@PathVariable Integer id) {
@@ -79,6 +84,15 @@ public class DisciplinaResource {
 
         Page<Disciplina> list = disciplinaService.findPage(page, linesPerPage, orderBy, direction);
         Page<DisciplinaDTO> listDTO = list.map(obj -> new DisciplinaDTO(obj));
+
+        return ResponseEntity.ok().body(listDTO);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping(value = "/{disciplinaId}/alunos")
+    public ResponseEntity<List<AlunoDTO>> findAlunos(@PathVariable Integer disciplinaId) {
+        List<Aluno> list = alunoService.findByDisciplina(disciplinaId);
+        List<AlunoDTO> listDTO = list.stream().map(obj -> new AlunoDTO(obj)).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(listDTO);
     }

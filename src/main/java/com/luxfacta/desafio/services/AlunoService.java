@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,5 +138,20 @@ public class AlunoService {
         Aluno aluno = findByEmail(email);
 
         return search(aluno.getId());
+    }
+
+    public List<Aluno> findByDisciplina(Integer disciplinaId) {
+        Disciplina disciplina = disciplinaService.find(disciplinaId);
+        List<Aluno> listAlunos = findAll();
+        List<Aluno> listAlunoDisciplina = new ArrayList<>();
+
+        for (Aluno aluno : listAlunos) {
+            for (Disciplina disciplinaAluno : aluno.getDisciplinas()) {
+                if (disciplinaAluno.equals(disciplina)) {
+                    listAlunoDisciplina.add(aluno);
+                }
+            }
+        }
+        return listAlunoDisciplina;
     }
 }
