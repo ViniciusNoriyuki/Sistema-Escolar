@@ -4,10 +4,7 @@ import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.domain.Nota;
 import com.luxfacta.desafio.domain.enums.Perfil;
-import com.luxfacta.desafio.dto.AlunoCompleteDTO;
-import com.luxfacta.desafio.dto.AlunoDTO;
-import com.luxfacta.desafio.dto.AlunoNewDTO;
-import com.luxfacta.desafio.dto.NotaViewDTO;
+import com.luxfacta.desafio.dto.*;
 import com.luxfacta.desafio.repositories.AlunoRepository;
 import com.luxfacta.desafio.security.UserSS;
 import com.luxfacta.desafio.services.exceptions.AuthorizationException;
@@ -111,9 +108,9 @@ public class AlunoService {
         return new Aluno(alunoNewDTO.getId(), alunoNewDTO.getNome(), alunoNewDTO.getEmail(), bCryptPasswordEncoder.encode(alunoNewDTO.getSenha()));
     }
 
-    public Aluno insertDisciplina(Integer alunoId, Integer disciplinaId) {
-        Aluno aluno = find(alunoId);
-        Disciplina disciplina = disciplinaService.find(disciplinaId);
+    public Aluno insertDisciplina(AlunoDisciplinaDTO alunoDisciplinaDTO) {
+        Aluno aluno = find(alunoDisciplinaDTO.getAlunoId());
+        Disciplina disciplina = disciplinaService.find(alunoDisciplinaDTO.getDisciplinaId());
         aluno.getDisciplinas().add(disciplina);
 
         return update(aluno);

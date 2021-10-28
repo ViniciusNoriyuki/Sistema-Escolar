@@ -3,6 +3,7 @@ package com.luxfacta.desafio.resources;
 import com.luxfacta.desafio.domain.Aluno;
 import com.luxfacta.desafio.dto.AlunoCompleteDTO;
 import com.luxfacta.desafio.dto.AlunoDTO;
+import com.luxfacta.desafio.dto.AlunoDisciplinaDTO;
 import com.luxfacta.desafio.dto.AlunoNewDTO;
 import com.luxfacta.desafio.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,9 @@ public class AlunoResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @PostMapping(value = "/{alunoId}/disciplina/{disciplinaId}")
-    public ResponseEntity<Void> insertDisciplinaInAluno(@PathVariable Integer alunoId, @PathVariable Integer disciplinaId) {
-        Aluno aluno = alunoService.insertDisciplina(alunoId, disciplinaId);
+    @PostMapping(value = "/disciplina")
+    public ResponseEntity<Void> insertDisciplinaInAluno(@Valid @RequestBody AlunoDisciplinaDTO alunoDisciplinaDTO) {
+        Aluno aluno = alunoService.insertDisciplina(alunoDisciplinaDTO);
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

@@ -4,6 +4,7 @@ import com.luxfacta.desafio.domain.Disciplina;
 import com.luxfacta.desafio.domain.Professor;
 import com.luxfacta.desafio.domain.enums.Perfil;
 import com.luxfacta.desafio.dto.ProfessorDTO;
+import com.luxfacta.desafio.dto.ProfessorDisciplinaDTO;
 import com.luxfacta.desafio.dto.ProfessorNewDTO;
 import com.luxfacta.desafio.repositories.ProfessorRepository;
 import com.luxfacta.desafio.security.UserSS;
@@ -102,9 +103,9 @@ public class ProfessorService {
         return new Professor(professorNewDTO.getId(), professorNewDTO.getNome(), professorNewDTO.getEmail(), bCryptPasswordEncoder.encode(professorNewDTO.getSenha()));
     }
 
-    public Professor insertDisciplina(Integer professorId, Integer disciplinaId) {
-        Professor professor = find(professorId);
-        Disciplina disciplina = disciplinaService.find(disciplinaId);
+    public Professor insertDisciplina(ProfessorDisciplinaDTO professorDisciplinaDTO) {
+        Professor professor = find(professorDisciplinaDTO.getProfessorId());
+        Disciplina disciplina = disciplinaService.find(professorDisciplinaDTO.getDisciplinaId());
         professor.setDisciplina(disciplina);
 
         return update(professor);
