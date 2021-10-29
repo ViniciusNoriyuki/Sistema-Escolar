@@ -1,4 +1,4 @@
-# Sistema-Escolar
+# Sistema-Escolar-BackEnd
 
 API Rest desenvolvida em linguagem Java, com utilização de Autenticação e Autorização com Tokens JWT e sistema de envio de email com SMTP do Google.
 
