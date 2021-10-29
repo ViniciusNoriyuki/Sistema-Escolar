@@ -6,6 +6,7 @@ Funcionalidades:
 
 - Há professores, alunos e disciplinas pré-cadastrados na base de dados (h2-console) para uso. Também possível visualizar em /services/DBService para ver suas senhas.
 - Profile de Teste com banco de dados em memória (H2) e também profile de Desenvolvimento com banco de dados MySQL
+- Retorno de erros personalizados
 - Atribuido automaticamente perfil de ADMIN ao criar Professores e USER ao criar Alunos
 - CRUD de disciplinas 
   - Cada disciplina possui seu professor e vários alunos
